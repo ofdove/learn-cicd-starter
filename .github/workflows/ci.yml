@@ -23,3 +23,15 @@ jobs:
 
       - name: Code style check
         run: (test -z $(go fmt ./...))
+
+      - name: Install staticcheck
+        run: (go install honnef.co/go/tools/cmd/staticcheck@latest)
+
+      - name: Code linting check
+        run: (staticcheck ./...)
+
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Security check
+        run: gosec ./...

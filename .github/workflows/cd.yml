@@ -1,0 +1,28 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-verison: "1.25.1"
+
+      - name: Build the app
+        run: (scripts/buildprod.sh)
+
+      - name: Build the docker image
+        run: (docker build -t sennk/notely:latest .)
+
+      - name: Run the image
+        run: (docker run -e PORT=8080 -p 8080:8080 sennk/notely:latest)
+
