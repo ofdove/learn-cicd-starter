@@ -20,3 +20,6 @@ jobs:
 
       - name: Ready to go
         run: (go test -cover ./...)
+
+      - name: Code style check
+        run: (test -z $(go fmt ./...))
